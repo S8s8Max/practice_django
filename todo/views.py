@@ -4,16 +4,15 @@ from django.http import HttpResponse
 def index(request):
     params = {
         "title":"TODO/Index",
-        "msg":"This is a todo application.",
-        "goto":"next",
+        "msg":"What is your name?",
     }
     return render(request, "todo/index.html", params)
 
-def next(request):
+def form(request):
+    msg = request.POST["msg"]
     params = {
         "title":"TODO/Next",
-        "msg":"This is another page.",
-        "goto":"index",
+        "msg":"Hello, " + msg + ".",
     }
     return render(request, "todo/index.html", params)
 
