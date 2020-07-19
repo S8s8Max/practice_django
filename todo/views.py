@@ -1,19 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import TodoForm
 
 def index(request):
     params = {
-        "title":"TODO/Index",
-        "msg":"What is your name?",
+        "title":"TODO",
+        "message":"your data :",
+        "form":TodoForm(),
     }
-    return render(request, "todo/index.html", params)
-
-def form(request):
-    msg = request.POST["msg"]
-    params = {
-        "title":"TODO/Next",
-        "msg":"Hello, " + msg + ".",
-    }
+    if (request.method == "POST"):
+        params["message"] = "Name : " + request.POST["name"] + \
+            "<br>mail : " + request.POST["mail"] + \
+            "<br>age : " + request.POST["age"]
+        params["form"] = TodoForm(request.POST)
     return render(request, "todo/index.html", params)
 
 
