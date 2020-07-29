@@ -8,18 +8,16 @@ class TodoView(TemplateView):
     def __init__(self):
         self.params = {
             "title": "TODO",
-            "message": "your data : ",
             "form": TodoForm(),
+            "result": None,
         }
 
     def get(self, request):
         return render(request, "todo/index.html", self.params)
 
     def post(self, request):
-        msg = "You are <b>" + request.POST["name"] + \
-            "(" + request.POST["age"] + ") <b>. <br>Your mail is <b>" + \
-            request.POST["mail"] + "<br>."
-        self.params["message"] = msg
+        ch = request.POST.getlist("choice")
+        self.params["result"] = "You selected: " + str(ch) + "."
         self.params["form"] = TodoForm(request.POST)
         return render(request, "todo/index.html", self.params)
 
