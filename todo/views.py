@@ -1,24 +1,51 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import TodoForm
-from django.views.generic import TemplateView
+from django.shortcuts import redirect
+from .models import Friend
+from .forms import FriendForm
 
-class TodoView(TemplateView):
+def index(request):
+    data = Friend.objects.all()
+    params = {
+        "title" : "todo",
+        "data" : data,
+    }
+    return render(request, "todo/index.html", params)
 
-    def __init__(self):
-        self.params = {
-            "title": "TODO",
-            "form": TodoForm(),
-            "result": None,
-        }
+# create model
+def create(request):
+    if (request.method == "POST"):
+        obj = Friend()
+        friend = FriendForm(request.POST, instance=obj)
+        friend.save()
+        return redirect(to="/todo")
+    params = {
+        "title": "Todo",
+        "form": FriendForm(),
+    }
+    return render(request, "todo/create.html", params)
 
-    def get(self, request):
-        return render(request, "todo/index.html", self.params)
+def edit(request, num):
+    obj = Friend.objects.get(id=num)
+    if (request.method == "POST"):
+        friend = FriendForm(request.POST, instance=obj)
+        friend.save()
+        return redirect(to="/todo")
+    params = {
+        "title": "Todo",
+        "id": num,
+        "form": FriendForm(instance=obj),
+    }
+    return render(request, "todo/edit.html", params)
 
-    def post(self, request):
-        ch = request.POST.getlist("choice")
-        self.params["result"] = "You selected: " + str(ch) + "."
-        self.params["form"] = TodoForm(request.POST)
-        return render(request, "todo/index.html", self.params)
-
-
+def delete(request, num):
+    friend = Friend.objects.get(id=num)
+    if (request.method == "POST"):
+        friend.delete()
+        return redirect(to="/todo")
+    params = {
+        "title": "Todo",
+        "id": num,
+        "obj": friend,
+    }
+    return render(request, "todo/delete.html", params)
