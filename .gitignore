@@ -13,5 +13,5 @@ pip-selfcheck.json
 db.sqlite3
 *.pyc
 todo/migrations/
-todo/__pycache__/
-
+django_app/__pycache__/
+sns/migrations/
