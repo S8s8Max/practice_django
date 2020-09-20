@@ -19,6 +19,7 @@
             <th>age</th>
             <th>mail</th>
             <th>birthday</th>
+            <th>task</th>
         </tr>
     {% for item in data %}
         <tr>
@@ -27,10 +28,15 @@
             <td>{{item.age}}</td>
             <td>{{item.mail}}</td>
             <td>{{item.birthday}}</td>
+            <td><ul>
+                {% for ob in item.task_set.all %}
+                    <li>{{ob.title}}</li>
+                {% endfor %}
+            </ul></td>
         </tr>
     {% endfor %}
     </table>
-    <ul class="pagination">
+    <ul class="pagination  justufy-content-center">
         {% if data.has_previous %}
         <li class="page-item">
             <a class="page-link" href="{% url 'index' %}">
@@ -44,12 +50,10 @@
 
         {% else %}
         <li class="page-item">
-            <a class="page-link">
-                &laquo; first</a>
+            <a class="page-link">&laquo; first</a>
         </li>
         <li class="page-item">
-            <a class="page-link">
-                &laquo; prev</a>
+            <a class="page-link">&laquo; prev</a>
         </li>
 
         {% endif %}
@@ -73,12 +77,10 @@
         </li>
         {% else %}
         <li class="page-item">
-            <a class="page-link">
-                next &raquo;</a>
+            <a class="page-link">next &raquo;</a>
         </li>
         <li class="page-item">
-            <a class="page-link">
-                last &raquo;</a>
+            <a class="page-link">last &raquo;</a>
         </li>
         {% endif %}
     </ul>
