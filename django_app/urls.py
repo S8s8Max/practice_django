@@ -20,4 +20,5 @@ import todo.views as todo
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("todo/", include("todo.urls")),
+    path("sns/", include("sns.urls")),
 ]
