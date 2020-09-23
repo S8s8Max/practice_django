@@ -48,9 +48,9 @@ class GroupSelectForm(models.Form):
         )
 
 # Friend check box form
-class FriendForm(moels.Form):
+class FriendsForm(moels.Form):
     def __init__(self, user, friends=[], vals=[], *args, **kwargs):
-        super(FriendForm, self).__init__(*args, **kwargs)
+        super(FriendsForm, self).__init__(*args, **kwargs)
         self.fields["friends"] = forms.MultipleChoiceField(
             choices=[(item.user, item.user) for item in friends],
             widget=forms.CheckboxSelectMultiple(),
