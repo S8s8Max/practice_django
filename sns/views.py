@@ -41,12 +41,12 @@ def index(request, page=1):
         # メッセージの取得
         messages = get_your_group_message(request.user, glist, page)
         # 共通処理
-        params = {
-            "login_user":request.user,
-            "contents":messages,
-            "check_form":checkform,
-        }
-        return render(request, "sns/index.html", params)
+    params = {
+        "login_user":request.user,
+        "contents":messages,
+        "check_form":checkform,
+    }
+    return render(request, "sns/index.html", params)
 
 
 @login_required(login_url="/admin/login/")
@@ -108,7 +108,7 @@ def groups(request):
     # GETアクセス時の処理
     else:
         # フォームの用意
-        groupsform = GroupSelectForm(request.usr)
+        groupsform = GroupSelectForm(request.user)
         friendsform = FriendsForm(request.user, friends=friends,\
             vals = [])
         sel_group = "-"
